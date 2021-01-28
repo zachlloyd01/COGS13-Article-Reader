@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% set active_page = "feeds" %}
+
+{% block content %}
+    <h1>Feeds</h1>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Link</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for feed in feeds %}
+                <tr>
+                    <th scope="row">{{ feed }}</th>
+                    <td><a href="{{ feeds[feed]['url'] }}">{{ feeds[feed]['url'] }}</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+    </table>
+
+    <a class="btn btn-primary" href="/addfeed" role="button" style="position: fixed; bottom: 5vh;right: 5vw;">Add a Feed</a>
+
+{% endblock %}

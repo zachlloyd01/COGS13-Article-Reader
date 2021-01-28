@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% set active_page = "articles" %}
+
+{% block content %}
+
+    <div class="spinner-border" id="loader" role="status" style='display: none'>
+        <span class="visually-hidden">Loading...</span>
+    </div>
+
+    <div id="mainContent">
+        <h1>Articles</h1>
+                <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        {% for feed in articles %}
+                            <a class="nav-link {{ 'active' if loop.index == 1 else '' }}" id="{{feed}}-tab" data-bs-toggle="tab" href="#{{feed}}" role="tab" aria-controls="{{feed}}" aria-selected="true">{{feed}}</a>
+                        {% endfor %}
+                    </div>
+                </nav>
+                
+
+                <div class="tab-content" id="nav-tabContent">
+                    
+                    
+                  
+                {% for feed in articles %}
+                <div class="tab-pane fade show  {{ 'active' if loop.index == 1 else '' }}" id="{{feed}}" role="tabpanel" aria-labelledby="{feed}-tab">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Snippet</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                        
+                                    {% for article in articles[feed] %}
+                                        <tr>
+                                            <td scope="row"><a href="{{ articles[feed][article]['link'] }}" style="text-decoration: none;">{{ articles[feed][article]['title']|safe }}</a></td>
+                                            <td>{{ articles[feed][article]['title']|safe }}</td>
+                                        </tr>
+                                    {% endfor %}
+
+                            </tbody>
+                        </table>
+                    </div>
+                    {% set iter2 = 1 %}
+                {% endfor %}
+                </div>
+                <button class="btn btn-primary" onclick="updateArticles()" role="button" style="position: fixed; bottom: 5vh;right: 5vw;">Update</button>
+            </div>
+            
+
+    
+
+    <script>
+        function updateArticles() {
+            document.getElementById("mainContent").style.display = 'none';
+            document.getElementById("loader").style.display="block";
+
+            fetch('/updatearticles')
+            .then(function (response) {
+                return response.json();
+            }).then(function (text) {
+                window.location.reload();
+            });
+        }
+    </script>
+
+{% endblock %}

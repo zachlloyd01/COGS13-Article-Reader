@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% set active_page = "addfeed" %}
+
+{% block content %}
+    <h1>Add a Feed</h1>
+    <form method="POST" action="/createfeed">
+        <div class="mb-3">
+            <label for="feedName" class="form-label">Feed Name</label>
+            <input type="text" class="form-control" name="name" id="feedName" aria-describedby="addFeed">
+            <div id="addFeed" class="form-text">Input what you want to name this feed here.</div>
+        </div>
+        <div class="mb-3">
+            <label for="feedURL" class="form-label">Feed Link</label>
+            <input type="text" name="link" class="form-control" id="feedURL" describedby="feedLink">
+            <div id="feedLink" class="form-text">Input the feed URL here.</div>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+{% endblock %}
